@@ -13,36 +13,78 @@
     <div class="card mt-3 bg-primary text-center text-white">
         <div class="card-body display-6 fw-bold">
           <h1>Silahkan lengkapi data berikut</h1>
+        </div>
             <!-- alert -->
             <div class="alert alert-warning my-alert d-none " role="alert">
                 <p> Harap isi <strong>nama</strong></p>
-              </div>
-
-        <form class="conNama">
-            <div class="input-group mb-2 mt-5 ">
-                <input type="text" class="form-control nama" placeholder="Siapa nama mu?">
-                <button class="btn btn-warning text-white btn-nama" type="submit">Konfirmasi</button>
             </div>
-        </form>
-        <form class="conTlp">
-            <div class="input-group mb-1 mt-3 ">
-                <input type="text" class="form-control nomor-telephone" placeholder="No telephone?">
-                <button class="btn btn-warning text-white btn-tlp" type="submit">Konfirmasi</button>
+            <div class="alert alert-warning alert-gagal d-none " role="alert">
+                <p> Gagal, coba priksa koneksi</strong></p>
             </div>
-        </form>
+        <div class="card-body display-6 fw-bold mt-3">
+        <form name="data-login-todo">     
+            <div class="conNama" >
+                <div class="input-group mb-2 mt-5 ">
+                    <input name="nama" type="text" class="form-control nama" placeholder="Siapa nama mu?">
+                </div>
+            </div>
+            <div class="conTlp" >
+                <div class="input-group mb-1 mt-3 ">
+                    <input name="nomor" type="text" class="form-control nomor-telephone" placeholder="No telephone?">
+                </div>
+            </div>
+       
             <div class="d-grid gap-2 mt-5">
-                <button class="btn btn-success btn-lanjut">Lanjut</button>
+                <button type="submit" class="btn btn-success btn-lanjut">Lanjut</button>
+                <button class="btn btn-warning d-none btn-loading" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
             </div>
+            
+        </form>
             
         </div>
       </div>
    </div>
 
    <script>
+       const scriptURL = 'https://script.google.com/macros/s/AKfycbw3LmExoVhVfeqWWZqHcEbtpDH_91ti_w6T9CX251ldq7G5GOtnwpkz_JfcsK7Faqdf6w/exec'
+       const form = document.forms['data-login-todo']
+
        const nama = document.querySelector(".nama");
        const noTlp = document.querySelector(".nomor-telephone")
        const conNama = document.querySelector(".conNama");
        const conTlp = document.querySelector(".conTlp");
+       const alertBisa = document.querySelector(".bisa-alert");
+       const btnLanjut = document.querySelector(".btn-lanjut");
+       const btnLoading =document.querySelector(".btn-loading");
+       const myAlert = document.querySelector(".my-alert");
+       const alertGagal = document.querySelector(".alert-gagal");
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            btnLanjut.classList.toggle('d-none');
+            btnLoading.classList.toggle('d-none');
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                console.log('Success!', response);
+                if(nama.value == ""){
+                    myAlert.classList.remove('d-none');
+                    btnLanjut.classList.toggle('d-none');
+                    btnLoading.classList.toggle('d-none');
+                }else{
+                    window.location.href="todo.html";
+                }})
+            .catch(error => {
+                alertGagal.classList.toggle('d-none')
+                btnLanjut.classList.toggle('d-none');
+                btnLoading.classList.toggle('d-none');
+                console.error('Error!', error.message)})
+        })
+
+
+      
        conNama.addEventListener("submit", function(event){
            event.preventDefault();
            if(nama.value==""){myAlert.classList.remove('d-none');}
@@ -55,15 +97,16 @@
            console.log(noTlp.value);
        });
 
-       const btnLanjut = document.querySelector(".btn-lanjut");
-       const myAlert = document.querySelector(".my-alert")
-       btnLanjut.addEventListener("click", function(event){
-           if(nama.value == ""){
-               myAlert.classList.remove('d-none');
-           }else{
-            window.location.href="todo.html";
-           }
-       });
+    //    const btnLanjut = document.querySelector(".btn-lanjut");
+    //    const myAlert = document.querySelector(".my-alert")
+    //    btnLanjut.addEventListener("click", function(event){
+    //         e.preventDefault()
+    //        if(nama.value == ""){
+    //            myAlert.classList.remove('d-none');
+    //        }else{
+    //         window.location.href="todo.html";
+    //        }
+    //    });
       
        
    </script>
