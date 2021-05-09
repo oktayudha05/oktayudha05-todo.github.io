@@ -3,42 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-
     <!-- bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <!-- bootstrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <title>Isi data diri kamu</title>
 </head>
 <body>
+   <div class="container">
+    <div class="card mt-3 bg-primary text-center text-white">
+        <div class="card-body display-6 fw-bold">
+          <h1>Silahkan lengkapi data berikut</h1>
+            <!-- alert -->
+            <div class="alert alert-warning my-alert d-none " role="alert">
+                <p> Harap isi <strong>nama</strong></p>
+              </div>
 
-    <div class="container">
-        <div class="card mt-5 text-center bg-primary text-white">
-            <div class="card-body">
-                <h1 class="display-6 fw-bold">Todo List Ku</h1>
-                <h4 class="fw-light">Catat kegiatan mu dan lakukan!</h4>
-
-                <form class="mt-5">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-user">
-                        <button class="btn btn-success" type="submit" id="submit">Catat!</button>
-                      </div>
-                </form>
-
-                <ul class="list-group">
-                    
-                </ul>
-
-
+        <form class="conNama">
+            <div class="input-group mb-2 mt-5 ">
+                <input type="text" class="form-control nama" placeholder="Siapa nama mu?">
+                <button class="btn btn-warning text-white btn-nama" type="submit">Konfirmasi</button>
             </div>
+        </form>
+        <form class="conTlp">
+            <div class="input-group mb-1 mt-3 ">
+                <input type="text" class="form-control nomor-telephone" placeholder="No telephone?">
+                <button class="btn btn-warning text-white btn-tlp" type="submit">Konfirmasi</button>
+            </div>
+        </form>
+            <div class="d-grid gap-2 mt-5">
+                <button class="btn btn-success btn-lanjut">Lanjut</button>
+            </div>
+            
         </div>
-    </div>
+      </div>
+   </div>
 
+   <script>
+       const nama = document.querySelector(".nama");
+       const noTlp = document.querySelector(".nomor-telephone")
+       const conNama = document.querySelector(".conNama");
+       const conTlp = document.querySelector(".conTlp");
+       conNama.addEventListener("submit", function(event){
+           event.preventDefault();
+           if(nama.value==""){myAlert.classList.remove('d-none');}
+           else{
+            myAlert.classList.add('d-none')
+            console.log(nama.value);}
+       });
+       conTlp.addEventListener("submit", function(event){
+           event.preventDefault();
+           console.log(noTlp.value);
+       });
 
+       const btnLanjut = document.querySelector(".btn-lanjut");
+       const myAlert = document.querySelector(".my-alert")
+       btnLanjut.addEventListener("click", function(event){
+           if(nama.value == ""){
+               myAlert.classList.remove('d-none');
+           }else{
+            window.location.href="todo.html";
+           }
+       });
+      
+       
+   </script>
+    
 
-    <script src="dist/sweetalert2.all.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+   <script src="dist/sweetalert2.all.min.js"></script>
+   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
